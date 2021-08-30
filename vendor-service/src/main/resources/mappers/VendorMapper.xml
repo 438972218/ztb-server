@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.vendor.mapper.VendorMapper">
+
+    <resultMap type="com.xdcplus.vendor.common.pojo.entity.Vendor" id="VendorMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="businessLicense" column="business_license" jdbcType="VARCHAR"/>
+        <result property="vatNumber" column="vat_number" jdbcType="VARCHAR"/>
+        <result property="enterpriseMail" column="enterprise_mail" jdbcType="VARCHAR"/>
+        <result property="registeredAddress" column="registered_address" jdbcType="VARCHAR"/>
+        <result property="mainPhone" column="main_phone" jdbcType="VARCHAR"/>
+        <result property="postcode" column="postcode" jdbcType="VARCHAR"/>
+        <result property="city" column="city" jdbcType="VARCHAR"/>
+        <result property="country" column="country" jdbcType="VARCHAR"/>
+        <result property="website" column="website" jdbcType="VARCHAR"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="updatedUser" column="updated_user" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="INTEGER"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryVendor" resultMap="VendorMap">
+        select
+          id, code, status, name, business_license, vat_number, enterprise_mail, registered_address, main_phone, postcode, city, country, website, created_user, created_time, updated_user, updated_time, description, version, deleted
+          from scm_vendor
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="code != null and code != ''">
+                and code = #{code}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="businessLicense != null and businessLicense != ''">
+                and business_license = #{businessLicense}
+            </if>
+            <if test="vatNumber != null and vatNumber != ''">
+                and vat_number = #{vatNumber}
+            </if>
+            <if test="enterpriseMail != null and enterpriseMail != ''">
+                and enterprise_mail = #{enterpriseMail}
+            </if>
+            <if test="registeredAddress != null and registeredAddress != ''">
+                and registered_address = #{registeredAddress}
+            </if>
+            <if test="mainPhone != null and mainPhone != ''">
+                and main_phone = #{mainPhone}
+            </if>
+            <if test="postcode != null and postcode != ''">
+                and postcode = #{postcode}
+            </if>
+            <if test="city != null and city != ''">
+                and city = #{city}
+            </if>
+            <if test="country != null and country != ''">
+                and country = #{country}
+            </if>
+            <if test="website != null and website != ''">
+                and website = #{website}
+            </if>
+            <if test="createdUser != null and createdUser != ''">
+                and created_user = #{createdUser}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updatedUser != null and updatedUser != ''">
+                and updated_user = #{updatedUser}
+            </if>
+            <if test="updatedTime != null">
+                and updated_time = #{updatedTime}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="version != null">
+                and version = #{version}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+        </where>
+    </select>
+
+</mapper>
+

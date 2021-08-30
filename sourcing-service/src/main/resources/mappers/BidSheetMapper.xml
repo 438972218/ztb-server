@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.biz.mapper.BidSheetMapper">
+
+    <resultMap type="com.xdcplus.biz.common.pojo.entity.BidSheet" id="BidSheetMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="requestId" column="request_id" jdbcType="INTEGER"/>
+        <result property="projectSheetId" column="project_sheet_id" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="bidSheetNum" column="bid_sheet_num" jdbcType="VARCHAR"/>
+        <result property="sheetType" column="sheet_type" jdbcType="VARCHAR"/>
+        <result property="tenderType" column="tender_type" jdbcType="VARCHAR"/>
+        <result property="tenderMode" column="tender_mode" jdbcType="VARCHAR"/>
+        <result property="bidEndTime" column="bid_end_time" jdbcType="INTEGER"/>
+        <result property="clarifyEndTime" column="clarify_end_time" jdbcType="INTEGER"/>
+        <result property="openBidTime" column="open_bid_time" jdbcType="INTEGER"/>
+        <result property="currency" column="currency" jdbcType="VARCHAR"/>
+        <result property="tenderMatters" column="tender_matters" jdbcType="VARCHAR"/>
+        <result property="explanation" column="explanation" jdbcType="VARCHAR"/>
+        <result property="mark" column="mark" jdbcType="VARCHAR"/>
+        <result property="approvalProcess" column="approval_process" jdbcType="INTEGER"/>
+        <result property="qualificationTender" column="qualification_tender" jdbcType="INTEGER"/>
+        <result property="technicalTender" column="technical_tender" jdbcType="INTEGER"/>
+        <result property="rankingRules" column="ranking_rules" jdbcType="VARCHAR"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="updatedUser" column="updated_user" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="INTEGER"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryBidSheet" resultMap="BidSheetMap">
+        select
+          id, request_id, project_sheet_id, title, bid_sheet_num, sheet_type, tender_type, tender_mode, bid_end_time, clarify_end_time, open_bid_time, currency, tender_matters, explanation, mark, approval_process, qualification_tender, technical_tender, ranking_rules, created_user, created_time, updated_user, updated_time, description, version, deleted
+          from scm_bid_sheet
+        <where>
+            request_id is not null
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="requestId != null">
+                and request_id = #{requestId}
+            </if>
+            <if test="projectSheetId != null">
+                and project_sheet_id = #{projectSheetId}
+            </if>
+            <if test="title != null and title != ''">
+                and title = #{title}
+            </if>
+            <if test="bidSheetNum != null and bidSheetNum != ''">
+                and bid_sheet_num = #{bidSheetNum}
+            </if>
+            <if test="sheetType != null and sheetType != ''">
+                and sheet_type = #{sheetType}
+            </if>
+            <if test="tenderType != null and tenderType != ''">
+                and tender_type = #{tenderType}
+            </if>
+            <if test="tenderMode != null and tenderMode != ''">
+                and tender_mode = #{tenderMode}
+            </if>
+            <if test="bidEndTime != null">
+                and bid_end_time = #{bidEndTime}
+            </if>
+            <if test="clarifyEndTime != null">
+                and clarify_end_time = #{clarifyEndTime}
+            </if>
+            <if test="openBidTime != null">
+                and open_bid_time = #{openBidTime}
+            </if>
+            <if test="currency != null and currency != ''">
+                and currency = #{currency}
+            </if>
+            <if test="tenderMatters != null and tenderMatters != ''">
+                and tender_matters = #{tenderMatters}
+            </if>
+            <if test="explanation != null and explanation != ''">
+                and explanation = #{explanation}
+            </if>
+            <if test="mark != null and mark != ''">
+                and mark = #{mark}
+            </if>
+            <if test="approvalProcess != null">
+                and approval_process = #{approvalProcess}
+            </if>
+            <if test="qualificationTender != null">
+                and qualification_tender = #{qualificationTender}
+            </if>
+            <if test="technicalTender != null">
+                and technical_tender = #{technicalTender}
+            </if>
+            <if test="rankingRules != null and rankingRules != ''">
+                and ranking_rules = #{rankingRules}
+            </if>
+            <if test="createdUser != null and createdUser != ''">
+                and created_user = #{createdUser}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updatedUser != null and updatedUser != ''">
+                and updated_user = #{updatedUser}
+            </if>
+            <if test="updatedTime != null">
+                and updated_time = #{updatedTime}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="version != null">
+                and version = #{version}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+            <choose>
+                <when test="requestIds != null and keyword != null">
+                    AND (request_id in
+                    <foreach collection="requestIds" index="index" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                    or title like CONCAT('%', #{keyword}, '%')
+                        or company_code like CONCAT('%', #{keyword}, '%')
+                        or purchasing_organization like CONCAT('%', #{keyword}, '%')
+                        or sheet_type like CONCAT('%', #{keyword}, '%')
+                        or tender_type like CONCAT('%', #{keyword}, '%')
+                        or tender_mode like CONCAT('%', #{keyword}, '%')
+                    )
+                </when>
+                <when test="requestIds != null and keyword == null">
+                    AND (request_id in
+                    <foreach collection="requestIds" index="index" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                    )
+                </when>
+                <when test="requestIds == null and keyword != null">
+                    AND (
+                        title like CONCAT('%', #{keyword}, '%')
+                        or company_code like CONCAT('%', #{keyword}, '%')
+                        or purchasing_organization like CONCAT('%', #{keyword}, '%')
+                        or sheet_type like CONCAT('%', #{keyword}, '%')
+                        or tender_type like CONCAT('%', #{keyword}, '%')
+                        or tender_mode like CONCAT('%', #{keyword}, '%')
+                    )
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <select id="queryBidSheetTemplate" resultMap="BidSheetMap">
+        select
+          id, request_id, project_sheet_id, title, bid_sheet_num, sheet_type, tender_type, tender_mode, bid_end_time, open_bid_time, currency, tender_matters, explanation, mark, approval_process, qualification_tender, technical_tender, ranking_rules, created_user, created_time, updated_user, updated_time, description, version, deleted
+          from scm_bid_sheet
+        <where>
+            request_id is null
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="requestId != null">
+                and request_id = #{requestId}
+            </if>
+            <if test="projectSheetId != null">
+                and project_sheet_id = #{projectSheetId}
+            </if>
+            <if test="title != null and title != ''">
+                and title = #{title}
+            </if>
+            <if test="bidSheetNum != null and bidSheetNum != ''">
+                and bid_sheet_num = #{bidSheetNum}
+            </if>
+            <if test="sheetType != null and sheetType != ''">
+                and sheet_type = #{sheetType}
+            </if>
+            <if test="tenderType != null and tenderType != ''">
+                and tender_type = #{tenderType}
+            </if>
+            <if test="tenderMode != null and tenderMode != ''">
+                and tender_mode = #{tenderMode}
+            </if>
+            <if test="bidEndTime != null">
+                and bid_end_time = #{bidEndTime}
+            </if>
+            <if test="clarifyEndTime != null">
+                and clarify_end_time = #{clarifyEndTime}
+            </if>
+            <if test="openBidTime != null">
+                and open_bid_time = #{openBidTime}
+            </if>
+            <if test="currency != null and currency != ''">
+                and currency = #{currency}
+            </if>
+            <if test="tenderMatters != null and tenderMatters != ''">
+                and tender_matters = #{tenderMatters}
+            </if>
+            <if test="explanation != null and explanation != ''">
+                and explanation = #{explanation}
+            </if>
+            <if test="mark != null and mark != ''">
+                and mark = #{mark}
+            </if>
+            <if test="approvalProcess != null">
+                and approval_process = #{approvalProcess}
+            </if>
+            <if test="qualificationTender != null">
+                and qualification_tender = #{qualificationTender}
+            </if>
+            <if test="technicalTender != null">
+                and technical_tender = #{technicalTender}
+            </if>
+            <if test="rankingRules != null and rankingRules != ''">
+                and ranking_rules = #{rankingRules}
+            </if>
+            <if test="createdUser != null and createdUser != ''">
+                and created_user = #{createdUser}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updatedUser != null and updatedUser != ''">
+                and updated_user = #{updatedUser}
+            </if>
+            <if test="updatedTime != null">
+                and updated_time = #{updatedTime}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="version != null">
+                and version = #{version}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+            <choose>
+                <when test="requestIds != null and keyword != null">
+                    AND (request_id in
+                    <foreach collection="requestIds" index="index" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                    or title like CONCAT('%', #{keyword}, '%')
+                        or company_code like CONCAT('%', #{keyword}, '%')
+                        or purchasing_organization like CONCAT('%', #{keyword}, '%')
+                        or sheet_type like CONCAT('%', #{keyword}, '%')
+                        or tender_type like CONCAT('%', #{keyword}, '%')
+                        or tender_mode like CONCAT('%', #{keyword}, '%')
+                    )
+                </when>
+                <when test="requestIds != null and keyword == null">
+                    AND (request_id in
+                    <foreach collection="requestIds" index="index" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                    )
+                </when>
+                <when test="requestIds == null and keyword != null">
+                    AND (
+                        title like CONCAT('%', #{keyword}, '%')
+                        or company_code like CONCAT('%', #{keyword}, '%')
+                        or purchasing_organization like CONCAT('%', #{keyword}, '%')
+                        or sheet_type like CONCAT('%', #{keyword}, '%')
+                        or tender_type like CONCAT('%', #{keyword}, '%')
+                        or tender_mode like CONCAT('%', #{keyword}, '%')
+                    )
+                </when>
+            </choose>
+        </where>
+    </select>
+
+</mapper>
+

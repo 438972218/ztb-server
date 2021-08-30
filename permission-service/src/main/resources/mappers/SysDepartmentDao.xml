@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.permission.dao.SysDepartmentDao">
+
+    <resultMap type="com.xdcplus.permission.common.pojo.entity.SysDepartment" id="SysDepartmentMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="updatedUser" column="updated_user" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="INTEGER"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="shortName" column="short_name" jdbcType="VARCHAR"/>
+        <result property="fullName" column="full_name" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="INTEGER"/>
+        <result property="companyCode" column="company_code" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+        <result property="parentCode" column="parent_code" jdbcType="VARCHAR"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="manager" column="manager" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        , created_user, created_time, updated_user, updated_time, version, deleted, short_name, full_name, company_id, company_code, parent_id, parent_code, code, manager    </sql>
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="getSysDepartmentPageByCondition" resultMap="SysDepartmentMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_department
+        <where>
+            <if test="sysDepartmentFilterQuery.shortName != null and sysDepartmentFilterQuery.shortName != ''">
+                and short_name like concat("%",  #{sysDepartmentFilterQuery.shortName}, "%")
+            </if>
+            <if test="sysDepartmentFilterQuery.fullName != null and sysDepartmentFilterQuery.fullName != ''">
+                and full_name like concat("%",  #{sysDepartmentFilterQuery.fullName}, "%")
+            </if>
+            <if test="sysDepartmentFilterQuery.companyId != null">
+                and company_id = #{sysDepartmentFilterQuery.companyId}
+            </if>
+            <if test="sysDepartmentFilterQuery.parentId != null">
+                and parent_id = #{sysDepartmentFilterQuery.parentId}
+            </if>
+            <if test="sysDepartmentFilterQuery.code != null and sysDepartmentFilterQuery.code != ''">
+                and code = #{sysDepartmentFilterQuery.code}
+            </if>
+            <if test="sysDepartmentFilterQuery.manager != null and sysDepartmentFilterQuery.manager != ''">
+                and manager = #{sysDepartmentFilterQuery.manager}
+            </if>
+            and deleted=0
+        </where>
+    </select>
+    <select id="getDepartmentByCode" resultType="com.xdcplus.permission.common.pojo.entity.SysDepartment">
+        select
+        <include refid="Base_Column_List"/>
+
+        from sys_department
+        where  code = #{code}
+    </select>
+    <select id="getSysDepartmentByCodeAndNoId"
+            resultType="com.xdcplus.permission.common.pojo.entity.SysDepartment">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_department where code =#{code}
+        <if test="id != null">
+            and id != #{id}
+        </if>
+        and deleted = 0
+    </select>
+    <select id="getByCompanyId" resultType="com.xdcplus.permission.common.pojo.entity.SysDepartment">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_department where company_id =#{companyId}
+        and deleted = 0
+
+    </select>
+
+    <update id="updateParentIdByParentCode">
+        UPDATE sys_department a,sys_department b SET a.parent_id=b.id WHERE a.parent_code=b.`code`
+    </update>
+    <update id="updateCompanyIdByCompanyCode">
+        UPDATE sys_department a,sys_company b SET a.company_id=b.id WHERE a.company_code=b.`code`
+    </update>
+
+</mapper>
+

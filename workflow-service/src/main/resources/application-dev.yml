@@ -1,0 +1,50 @@
+spring:
+
+  # mysql 配置
+  datasource:
+    url: jdbc:mysql://10.20.54.162:3306/ztb_workflow?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: xdcplus.com
+
+  # redis 缓存配置
+  redis:
+    host: localhost
+    port: 6379
+    database: 2
+
+#knife4j配置
+knife4j:
+  # 是否是生产模式
+  production: false
+
+email:
+  enabled: true
+  host: 10.20.1.13
+  port: 25
+  ssl-enable: false
+  avoid-auth-enable: true
+  from:
+    name: 贾荣
+    email: rong.jia@xdcplus.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

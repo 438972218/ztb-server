@@ -1,0 +1,133 @@
+logging:
+  config: classpath:logback/logback-${spring.profiles.active}.xml
+  route:
+    # 是否打印route转发日志
+    enabled: false
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+  profiles:
+    active: ${ACTIVE_NAME}
+
+  cloud:
+
+    loadbalancer:
+      retry:
+        enabled: true
+
+    gateway:
+
+      discovery:
+        locator:
+          #  开启注册中心路由功能，实现动态路由
+          enabled: true
+
+      # hystrix全局断路器
+      default-filters:
+        - name: Hystrix
+          args:
+            name: defaultfallbackCmd
+            fallbackUri: forward:/defaultfallback
+
+      filter:
+        # 是否开启hystrix
+        hystrix:
+          enabled: true
+        # 是否开启重试
+        retry:
+          enabled: true
+
+      # id: 在所有路由定义中需要唯一，不能重复
+      # uri: lb://** lb://为固定写法，表示开启负载均衡； ** 即服务在Nacos中注册的名字
+      # predicates:- Path=/product/** ，规则为/product/** 的请求都还转发至微服务product-service中。
+      routes:
+        - id: sourcing-service
+          uri: lb://sourcing-service
+          predicates:
+            - Path=/sourcing/**
+        - id: workflow-service
+          uri: lb://workflow-service
+          predicates:
+            - Path=/workflow/**
+        - id: permission-service
+          uri: lb://permission-service
+          predicates:
+            - Path=/perm/**
+        - id: vendor-perm-service
+          uri: lb://vendor-perm-service
+          predicates:
+            - Path=/vperm/**
+        - id: vendor-service
+          uri: lb://vendor-service
+          predicates:
+            - Path=/vendor/**
+        - id: vendor-websocket
+          uri: lb:ws://vendor-service
+          predicates:
+            - Path=/vendor-websocket/imServer/**
+
+#hystrix配置
+hystrix:
+  threadpool:
+    default:
+      coreSize: 10
+      maxQueueSize: 300
+      queueSizeRejectionThreshold: 800
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+    fallbackcmd:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          semaphore:
+            maxConcurrentRequests: 5000
+
+#ribbon配置
+ribbon:
+  eureka:
+    # 默认开启ribbon
+    enabled: true
+  #对当前实例的重试次数
+  MaxAutoRetries: 1
+  #切换实例的重试次数
+  MaxAutoRetriesNextServer: 2
+  #请求处理的超时时间
+  ReadTimeout: 60000
+  #请求连接的超时时间
+  ConnectTimeout: 60000
+  #对所有操作请求都进行重试
+  OkToRetryOnAllOperations: true
+
+# swagger
+swagger:
+  gateway:
+    swagger-api-docs: /v2/api-docs
+    swagger-version: 2.0
+
+
+whitelist:
+  urls: /**
+#  urls: /**/anon/**, /webjars/**, /doc.html, /**/doc.html, /swagger-resources/**, /*/v2/api-docs, /actuator/**, /**/registerUser, /vendor-websocket/imServer/**, /**/forgetPassword
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

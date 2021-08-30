@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.biz.mapper.BidDetailMapper">
+
+    <resultMap type="com.xdcplus.biz.common.pojo.entity.BidDetail" id="BidDetailMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="bidSheetId" column="bid_sheet_id" jdbcType="INTEGER"/>
+        <result property="bidType" column="bid_type" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="explaination" column="explaination" jdbcType="VARCHAR"/>
+        <result property="quantity" column="quantity" jdbcType="NUMERIC"/>
+        <result property="unit" column="unit" jdbcType="VARCHAR"/>
+        <result property="var1" column="var1" jdbcType="VARCHAR"/>
+        <result property="var2" column="var2" jdbcType="VARCHAR"/>
+        <result property="var3" column="var3" jdbcType="VARCHAR"/>
+        <result property="var4" column="var4" jdbcType="VARCHAR"/>
+        <result property="var5" column="var5" jdbcType="VARCHAR"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="updatedUser" column="updated_user" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="INTEGER"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryBidDetail" resultMap="BidDetailMap">
+        select
+          id, bid_sheet_id, bid_type, type, name, explaination, quantity, unit, var1, var2, var3, var4, var5, created_user, created_time, updated_user, updated_time, description, version, deleted
+          from scm_bid_detail
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="bidSheetId != null">
+                and bid_sheet_id = #{bidSheetId}
+            </if>
+            <if test="bidType != null and bidType != ''">
+                and bid_type = #{bidType}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="explaination != null and explaination != ''">
+                and explaination = #{explaination}
+            </if>
+            <if test="quantity != null">
+                and quantity = #{quantity}
+            </if>
+            <if test="unit != null and unit != ''">
+                and unit = #{unit}
+            </if>
+            <if test="var1 != null and var1 != ''">
+                and var1 = #{var1}
+            </if>
+            <if test="var2 != null and var2 != ''">
+                and var2 = #{var2}
+            </if>
+            <if test="var3 != null and var3 != ''">
+                and var3 = #{var3}
+            </if>
+            <if test="var4 != null and var4 != ''">
+                and var4 = #{var4}
+            </if>
+            <if test="var5 != null and var5 != ''">
+                and var5 = #{var5}
+            </if>
+            <if test="createdUser != null and createdUser != ''">
+                and created_user = #{createdUser}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updatedUser != null and updatedUser != ''">
+                and updated_user = #{updatedUser}
+            </if>
+            <if test="updatedTime != null">
+                and updated_time = #{updatedTime}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="version != null">
+                and version = #{version}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+        </where>
+    </select>
+
+</mapper>
+

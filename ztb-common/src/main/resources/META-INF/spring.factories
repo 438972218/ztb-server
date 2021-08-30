@@ -1,0 +1,8 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    com.xdcplus.spring.boot.autoconfigure.ZtbWebAutoConfiguration,\
+    com.xdcplus.spring.boot.autoconfigure.EmailAutoConfiguration, \
+    com.xdcplus.ztb.common.swagger.SwaggerAutoConfiguration, \
+    com.xdcplus.ztb.common.swagger.SwaggerWebConfiguration, \
+    com.xdcplus.ztb.common.cache.RedisConfig
+
+

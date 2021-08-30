@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: scheduling-service
+
+  profiles:
+    active: ${ACTIVE_NAME}
+
+eureka:
+  instance:
+    prefer-ip-address: true # 显示ip地址
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+
+# 暴露端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

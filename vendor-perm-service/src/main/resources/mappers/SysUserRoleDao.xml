@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.vendorperm.dao.SysUserRoleDao">
+
+    <resultMap type="com.xdcplus.vendorperm.common.pojo.entity.SysUserRole" id="SysUserRoleMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="roleId" column="role_id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        , created_user, created_time, role_id, user_id    </sql>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SysUserRoleMap">
+        select
+        <include refid="Base_Column_List"/>
+
+        from sys_user_role
+        where id = #{id}
+    </select>
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SysUserRoleMap">
+        select
+        <include refid="Base_Column_List"/>
+
+        from sys_user_role
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="createdUser != null and createdUser != ''">
+                and created_user = #{createdUser}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="roleId != null">
+                and role_id = #{roleId}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </where>
+    </select>
+    <select id="getByRoleId" resultType="com.xdcplus.vendorperm.common.pojo.entity.SysUserRole">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user_role
+        <where>
+            <if test="roleId != null">
+                and role_id = #{roleId}
+            </if>
+        </where>
+
+    </select>
+    <select id="getByUserId" resultType="com.xdcplus.vendorperm.common.pojo.entity.SysUserRole">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user_role
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </where>
+
+    </select>
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from sys_user_role
+        where id = #{id}
+    </delete>
+    <delete id="deleteByUserId">
+        delete
+        from sys_user_role
+        where user_id = #{userId}
+
+    </delete>
+
+</mapper>
+

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.vendorperm.dao.SysPermissionGroupPermissionDao">
+
+    <resultMap type="com.xdcplus.vendorperm.common.pojo.entity.SysPermissionGroupPermission"
+               id="SysPermissionGroupPermissionMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="permissionGroupId" column="permission_group_id" jdbcType="INTEGER"/>
+        <result property="permissionId" column="permission_id" jdbcType="INTEGER"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        , permission_group_id, permission_id, created_user, created_time    </sql>
+    <delete id="deleteBySysPermissionGroupId">
+        delete
+        from sys_permission_group_permission
+        where permission_group_id = #{permissionGroupId}
+    </delete>
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="getPermissionGroupPermissionByCondition" resultMap="SysPermissionGroupPermissionMap">
+        select
+        <include refid="Base_Column_List"/>
+
+        from sys_permission_group_permission
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="permissionGroupId != null">
+                and permission_group_id = #{permissionGroupId}
+            </if>
+            <if test="permissionId != null">
+                and permission_id = #{permissionId}
+            </if>
+        </where>
+    </select>
+</mapper>
+

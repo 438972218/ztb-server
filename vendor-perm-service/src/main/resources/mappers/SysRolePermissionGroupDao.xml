@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.vendorperm.dao.SysRolePermissionGroupDao">
+
+    <resultMap type="com.xdcplus.vendorperm.common.pojo.entity.SysRolePermissionGroup"
+               id="SysRolePermissionGroupMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="roleId" column="role_id" jdbcType="INTEGER"/>
+        <result property="permissionGroupId" column="permission_group_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        , created_user, created_time, role_id, permission_group_id    </sql>
+    <delete id="deleteByRoleId">
+        delete
+        from sys_role_permission_group
+        where role_id = #{roleId}
+
+    </delete>
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="getSysRolePermissionGroupByCondition" resultMap="SysRolePermissionGroupMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role_permission_group
+        <where>
+            <if test="sysRolePermissionGroupFilterQuery.roleId != null">
+                and role_id = #{sysRolePermissionGroupFilterQuery.roleId}
+            </if>
+            <if test="sysRolePermissionGroupFilterQuery.permissionGroupId != null">
+                and permission_group_id = #{sysRolePermissionGroupFilterQuery.permissionGroupId}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
+

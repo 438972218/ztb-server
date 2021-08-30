@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.vendor.mapper.VendorUserMapper">
+
+    <resultMap type="com.xdcplus.vendor.common.pojo.entity.VendorUser" id="VendorUserMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="vendorId" column="vendor_id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, vendor_id, user_id
+    </sql>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryVendorUser" resultMap="VendorUserMap">
+        select
+          id, vendor_id, user_id
+          from scm_vendor_user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="vendorId != null">
+                and vendor_id = #{vendorId}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </where>
+    </select>
+    <select id="findVendorUserByUserId" resultMap="VendorUserMap">
+        select
+            <include refid="Base_Column_List"/>
+        from scm_vendor_user
+        where user_id = #{userId,jdbcType=BIGINT}
+    </select>
+
+</mapper>
+

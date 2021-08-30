@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.biz.mapper.BidSpecialistMapper">
+
+    <resultMap type="com.xdcplus.biz.common.pojo.entity.BidSpecialist" id="BidSpecialistMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="bidSheetId" column="bid_sheet_id" jdbcType="INTEGER"/>
+        <result property="bidType" column="bid_type" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="specialistName" column="specialist_name" jdbcType="VARCHAR"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="updatedUser" column="updated_user" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="INTEGER"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryBidSpecialist" resultMap="BidSpecialistMap">
+        select
+          id, bid_sheet_id, bid_type, user_id, specialist_name, created_user, created_time, updated_user, updated_time, description, version, deleted
+          from scm_bid_specialist
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="bidSheetId != null">
+                and bid_sheet_id = #{bidSheetId}
+            </if>
+            <if test="bidType != null and bidType != ''">
+                and bid_type = #{bidType}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="specialistName != null and specialistName != ''">
+                and specialist_name = #{specialistName}
+            </if>
+            <if test="createdUser != null and createdUser != ''">
+                and created_user = #{createdUser}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updatedUser != null and updatedUser != ''">
+                and updated_user = #{updatedUser}
+            </if>
+            <if test="updatedTime != null">
+                and updated_time = #{updatedTime}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="version != null">
+                and version = #{version}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+        </where>
+    </select>
+
+</mapper>
+

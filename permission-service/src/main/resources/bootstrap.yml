@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: permission-service
+
+  profiles:
+    active: ${ACTIVE_NAME}
+
+eureka:
+  instance:
+    prefer-ip-address: true # 显示ip地址
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+
+
+#feign配置
+feign:
+  hystrix:
+    enabled: true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

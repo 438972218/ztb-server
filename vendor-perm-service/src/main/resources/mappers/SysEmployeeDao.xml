@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.vendorperm.dao.SysEmployeeDao">
+
+    <resultMap type="com.xdcplus.vendorperm.common.pojo.entity.SysEmployee" id="SysEmployeeMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="managerId" column="manager_id" jdbcType="INTEGER"/>
+        <result property="realName" column="real_name" jdbcType="VARCHAR"/>
+        <result property="employeeNo" column="employee_no" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="position" column="position" jdbcType="INTEGER"/>
+        <result property="departmentId" column="department_id" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="officeAddress" column="office_address" jdbcType="VARCHAR"/>
+        <result property="speciality" column="speciality" jdbcType="VARCHAR"/>
+        <result property="hobby" column="hobby" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="officePhone" column="office_phone" jdbcType="VARCHAR"/>
+        <result property="mail" column="mail" jdbcType="VARCHAR"/>
+        <result property="office" column="office" jdbcType="VARCHAR"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="updatedUser" column="updated_user" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="INTEGER"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="managerCode" column="manager_code" jdbcType="VARCHAR"/>
+        <result property="positionName" column="position_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        , manager_id, real_name, employee_no, sex, position, department_id, status, office_address, speciality, hobby, phone, office_phone, mail, office, created_user, created_time, updated_user, updated_time, version, deleted,position_name    </sql>
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="getSysEmployeeByCondition" resultMap="SysEmployeeMap">
+        select
+        <include refid="Base_Column_List"/>
+
+        from sys_employee
+        <where>
+            <if test="sysEmployeeFilterQuery.managerId != null">
+                and manager_id = #{sysEmployeeFilterQuery.managerId}
+            </if>
+            <if test="sysEmployeeFilterQuery.realName != null and sysEmployeeFilterQuery.realName != ''">
+                and real_name = #{sysEmployeeFilterQuery.realName}
+            </if>
+            <if test="sysEmployeeFilterQuery.employeeNo != null and sysEmployeeFilterQuery.employeeNo != ''">
+                and employee_no = #{sysEmployeeFilterQuery.employeeNo}
+            </if>
+            <if test="sysEmployeeFilterQuery.sex != null">
+                and sex = #{sysEmployeeFilterQuery.sex}
+            </if>
+            <if test="sysEmployeeFilterQuery.position != null">
+                and position = #{sysEmployeeFilterQuery.position}
+            </if>
+            <if test="sysEmployeeFilterQuery.departmentId != null">
+                and department_id = #{sysEmployeeFilterQuery.departmentId}
+            </if>
+            <if test="sysEmployeeFilterQuery.status != null">
+                and status = #{sysEmployeeFilterQuery.status}
+            </if>
+            <if test="sysEmployeeFilterQuery.officeAddress != null and sysEmployeeFilterQuery.officeAddress != ''">
+                and office_address = #{sysEmployeeFilterQuery.officeAddress}
+            </if>
+            <if test="sysEmployeeFilterQuery.speciality != null and sysEmployeeFilterQuery.speciality != ''">
+                and speciality = #{sysEmployeeFilterQuery.speciality}
+            </if>
+            <if test="sysEmployeeFilterQuery.hobby != null and sysEmployeeFilterQuery.hobby != ''">
+                and hobby = #{sysEmployeeFilterQuery.hobby}
+            </if>
+            <if test="sysEmployeeFilterQuery.phone != null and sysEmployeeFilterQuery.phone != ''">
+                and phone = #{sysEmployeeFilterQuery.phone}
+            </if>
+            <if test="sysEmployeeFilterQuery.officePhone != null and sysEmployeeFilterQuery.officePhone != ''">
+                and office_phone = #{sysEmployeeFilterQuery.officePhone}
+            </if>
+            <if test="sysEmployeeFilterQuery.mail != null and sysEmployeeFilterQuery.mail != ''">
+                and mail = #{sysEmployeeFilterQuery.mail}
+            </if>
+            <if test="sysEmployeeFilterQuery.office != null and sysEmployeeFilterQuery.office != ''">
+                and office = #{sysEmployeeFilterQuery.office}
+            </if>
+            <if test="sysEmployeeFilterQuery.positionName != null and sysEmployeeFilterQuery.positionName != ''">
+                and position_name = #{sysEmployeeFilterQuery.positionName}
+            </if>
+                and deleted = 0
+        </where>
+    </select>
+    <select id="getSysEmployeeByEmployeeNo"
+            resultType="com.xdcplus.vendorperm.common.pojo.entity.SysEmployee">
+
+        select
+        <include refid="Base_Column_List"/>
+
+        from sys_employee
+      where employee_no = #{employeeNo}
+    </select>
+    <select id="getSysEmployeeByEmployeeNoAndNoId"
+            resultType="com.xdcplus.vendorperm.common.pojo.entity.SysEmployee">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_employee where employee_no =#{employeeNo}
+        <if test="id != null">
+            and id != #{id}
+        </if>
+        and deleted = 0
+    </select>
+    <select id="getSysEmployeeListByPositionId"
+            resultType="com.xdcplus.vendorperm.common.pojo.entity.SysEmployee">
+
+        select
+        <include refid="Base_Column_List"/>
+
+        from sys_employee
+        where position = #{positionId} and deleted = 0
+    </select>
+    <select id="getSysEmployeeListByDepartmentId"
+            resultType="com.xdcplus.vendorperm.common.pojo.entity.SysEmployee">
+        select
+        <include refid="Base_Column_List"/>
+
+        from sys_employee
+        where department_id = #{departmentId} and deleted = 0
+
+    </select>
+    <select id="getGeneralManagerEmployee"
+            resultMap="SysEmployeeMap">
+        select  <include refid="Base_Column_List"/> from sys_employee where id in(
+            select manager from sys_department where `short_name` in('总经理')
+        ) limit 1;
+    </select>
+    <select id="getEmployeeByCompanyId"
+            resultType="com.xdcplus.vendorperm.common.pojo.entity.SysEmployee">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_employee
+        where department_id  in(select id from sys_department where company_id =#{companyId} and deleted = 0) and deleted = 0
+
+    </select>
+    <select id="getEmployeeByDepartmentId"
+            resultType="com.xdcplus.vendorperm.common.pojo.entity.SysEmployee">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_employee
+            where department_id = #{departmentId} and deleted = 0
+
+    </select>
+
+    <update id="updateManagerIdByEmployeeNo">
+        UPDATE sys_employee a,sys_employee b SET a.manager_id=b.id WHERE a.manager_code=b.employee_no
+    </update>
+    <update id="updateDepartIdByDepartCode">
+        UPDATE sys_employee a,sys_department b SET a.department_id=b.id WHERE a.department_code=b.`code`
+    </update>
+
+
+</mapper>
+

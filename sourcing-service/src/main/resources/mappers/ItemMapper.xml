@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.biz.mapper.ItemMapper">
+
+    <resultMap type="com.xdcplus.biz.common.pojo.entity.Item" id="ItemMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="itemCode" column="item_code" jdbcType="VARCHAR"/>
+        <result property="itemName" column="item_name" jdbcType="VARCHAR"/>
+        <result property="genName" column="gen_name" jdbcType="VARCHAR"/>
+        <result property="itemType" column="item_type" jdbcType="VARCHAR"/>
+        <result property="brand" column="brand" jdbcType="VARCHAR"/>
+        <result property="originPlace" column="origin_place" jdbcType="VARCHAR"/>
+        <result property="basicMeasure" column="basic_measure" jdbcType="VARCHAR"/>
+        <result property="ifAssitMeasure" column="if_assit_measure" jdbcType="INTEGER"/>
+        <result property="assitMeasure" column="assit_measure" jdbcType="VARCHAR"/>
+        <result property="ifImport" column="if_import" jdbcType="INTEGER"/>
+        <result property="agent" column="agent" jdbcType="VARCHAR"/>
+        <result property="packageUnit" column="package_unit" jdbcType="VARCHAR"/>
+        <result property="roughWeight" column="rough_weight" jdbcType="VARCHAR"/>
+        <result property="netWeight" column="net_weight" jdbcType="VARCHAR"/>
+        <result property="weightUnit" column="weight_unit" jdbcType="VARCHAR"/>
+        <result property="specification" column="specification" jdbcType="VARCHAR"/>
+        <result property="model" column="model" jdbcType="VARCHAR"/>
+        <result property="manufacturer" column="manufacturer" jdbcType="VARCHAR"/>
+        <result property="volume" column="volume" jdbcType="VARCHAR"/>
+        <result property="volumeUnit" column="volume_unit" jdbcType="VARCHAR"/>
+        <result property="circulationCode" column="circulation_code" jdbcType="VARCHAR"/>
+        <result property="ifTax" column="if_tax" jdbcType="INTEGER"/>
+        <result property="defaultTaxType" column="default_tax_type" jdbcType="VARCHAR"/>
+        <result property="defaultTaxRate" column="default_tax_rate" jdbcType="VARCHAR"/>
+        <result property="itemManagementMethods" column="Item_management_methods" jdbcType="VARCHAR"/>
+        <result property="itemQuotaManagement" column="Item_quota_management" jdbcType="VARCHAR"/>
+        <result property="batchNumberRule" column="batch_number_rule" jdbcType="VARCHAR"/>
+        <result property="ifUseSale" column="if_use_sale" jdbcType="INTEGER"/>
+        <result property="ifUsePurchase" column="if_use_purchase" jdbcType="INTEGER"/>
+        <result property="productHierarchy" column="product_hierarchy" jdbcType="VARCHAR"/>
+        <result property="itemDesc" column="item_desc" jdbcType="VARCHAR"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="updatedUser" column="updated_user" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="INTEGER"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryItem" resultMap="ItemMap">
+        select
+          id, item_code, item_name, gen_name, item_type, brand, origin_place, basic_measure, if_assit_measure, assit_measure, if_import, agent, package_unit, rough_weight, net_weight, weight_unit, specification, model, manufacturer, volume, volume_unit, circulation_code, if_tax, default_tax_type, default_tax_rate, Item_management_methods, Item_quota_management, batch_number_rule, if_use_sale, if_use_purchase, product_hierarchy, item_desc, created_user, created_time, updated_user, updated_time, description, version, deleted
+          from scm_item
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="itemCode != null and itemCode != ''">
+                and item_code = #{itemCode}
+            </if>
+            <if test="itemName != null and itemName != ''">
+                and item_name = #{itemName}
+            </if>
+            <if test="genName != null and genName != ''">
+                and gen_name = #{genName}
+            </if>
+            <if test="itemType != null and itemType != ''">
+                and item_type = #{itemType}
+            </if>
+            <if test="brand != null and brand != ''">
+                and brand = #{brand}
+            </if>
+            <if test="originPlace != null and originPlace != ''">
+                and origin_place = #{originPlace}
+            </if>
+            <if test="basicMeasure != null and basicMeasure != ''">
+                and basic_measure = #{basicMeasure}
+            </if>
+            <if test="ifAssitMeasure != null">
+                and if_assit_measure = #{ifAssitMeasure}
+            </if>
+            <if test="assitMeasure != null and assitMeasure != ''">
+                and assit_measure = #{assitMeasure}
+            </if>
+            <if test="ifImport != null">
+                and if_import = #{ifImport}
+            </if>
+            <if test="agent != null and agent != ''">
+                and agent = #{agent}
+            </if>
+            <if test="packageUnit != null and packageUnit != ''">
+                and package_unit = #{packageUnit}
+            </if>
+            <if test="roughWeight != null and roughWeight != ''">
+                and rough_weight = #{roughWeight}
+            </if>
+            <if test="netWeight != null and netWeight != ''">
+                and net_weight = #{netWeight}
+            </if>
+            <if test="weightUnit != null and weightUnit != ''">
+                and weight_unit = #{weightUnit}
+            </if>
+            <if test="specification != null and specification != ''">
+                and specification = #{specification}
+            </if>
+            <if test="model != null and model != ''">
+                and model = #{model}
+            </if>
+            <if test="manufacturer != null and manufacturer != ''">
+                and manufacturer = #{manufacturer}
+            </if>
+            <if test="volume != null and volume != ''">
+                and volume = #{volume}
+            </if>
+            <if test="volumeUnit != null and volumeUnit != ''">
+                and volume_unit = #{volumeUnit}
+            </if>
+            <if test="circulationCode != null and circulationCode != ''">
+                and circulation_code = #{circulationCode}
+            </if>
+            <if test="ifTax != null">
+                and if_tax = #{ifTax}
+            </if>
+            <if test="defaultTaxType != null and defaultTaxType != ''">
+                and default_tax_type = #{defaultTaxType}
+            </if>
+            <if test="defaultTaxRate != null and defaultTaxRate != ''">
+                and default_tax_rate = #{defaultTaxRate}
+            </if>
+            <if test="itemManagementMethods != null and itemManagementMethods != ''">
+                and Item_management_methods = #{itemManagementMethods}
+            </if>
+            <if test="itemQuotaManagement != null and itemQuotaManagement != ''">
+                and Item_quota_management = #{itemQuotaManagement}
+            </if>
+            <if test="batchNumberRule != null and batchNumberRule != ''">
+                and batch_number_rule = #{batchNumberRule}
+            </if>
+            <if test="ifUseSale != null">
+                and if_use_sale = #{ifUseSale}
+            </if>
+            <if test="ifUsePurchase != null">
+                and if_use_purchase = #{ifUsePurchase}
+            </if>
+            <if test="productHierarchy != null and productHierarchy != ''">
+                and product_hierarchy = #{productHierarchy}
+            </if>
+            <if test="itemDesc != null and itemDesc != ''">
+                and item_desc = #{itemDesc}
+            </if>
+            <if test="createdUser != null and createdUser != ''">
+                and created_user = #{createdUser}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updatedUser != null and updatedUser != ''">
+                and updated_user = #{updatedUser}
+            </if>
+            <if test="updatedTime != null">
+                and updated_time = #{updatedTime}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="version != null">
+                and version = #{version}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+        </where>
+    </select>
+
+</mapper>
+

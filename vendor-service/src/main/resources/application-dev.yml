@@ -1,0 +1,41 @@
+spring:
+
+  # mysql 配置
+  datasource:
+    url: jdbc:mysql://10.20.54.162:3306/ztb_biz?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: xdcplus.com
+
+  # redis 缓存配置
+  redis:
+    host: localhost
+    port: 6379
+    database: 2
+
+#  minio:
+#    # Minio Host
+#    url: http://10.20.54.164:9000
+#    # Minio access key (login)
+#    access-key: minio
+#    # Minio secret key (password)
+#    secret-key: minio
+#    # Minio Bucket name for your application
+#    bucket: data
+
+file:
+  minio:
+    enable: true
+    endpoint: http://10.20.54.164:9000
+    bucket: ztb
+    access-key: minio
+    secret-key: minio123
+
+#knife4j配置
+knife4j:
+  # 是否是生产模式
+  production: false
+
+
+
+
+

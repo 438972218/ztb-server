@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.workflow.mapper.NotificationRelationMapper">
+
+    <resultMap id="BaseResultMap" type="com.xdcplus.workflow.common.pojo.entity.NotificationRelation">
+        <id column="id" property="id" />
+        <result column="request_Id" property="requestId" />
+        <result column="flow_id" property="flowId" />
+        <result column="history_id" property="historyId" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, request_Id, flow_id, history_id
+    </sql>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

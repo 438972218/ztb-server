@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.workflow.mapper.MailRelationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xdcplus.workflow.common.pojo.entity.MailRelation">
+        <id column="id" property="id" />
+        <result column="delivery_id" property="deliveryId" />
+        <result column="template_id" property="templateId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, delivery_id, template_id
+    </sql>
+
+    <select id="findRelation" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from xdc_t_mail_relation
+        <where>
+            <if test="templateId != null">
+                and template_id = #{templateId,jdbcType=BIGINT}
+            </if>
+            <if test="deliveryId != null">
+                and delivery_id = #{deliveryId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

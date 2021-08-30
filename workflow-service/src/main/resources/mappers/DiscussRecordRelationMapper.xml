@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.workflow.mapper.DiscussRecordRelationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xdcplus.workflow.common.pojo.entity.DiscussRecordRelation">
+        <id column="id" property="id" />
+        <result column="to_user" property="toUser" />
+        <result column="record_id" property="recordId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, to_user, record_id
+    </sql>
+    <select id="findRelation" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from xdc_t_discuss_record_relation
+        where record_id = #{recordId,jdbcType=BIGINT}
+    </select>
+
+</mapper>

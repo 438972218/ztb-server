@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.biz.mapper.DictionaryMapper">
+
+    <resultMap type="com.xdcplus.biz.common.pojo.entity.Dictionary" id="DictionaryMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="dictionaryChinese" column="dictionary_chinese" jdbcType="VARCHAR"/>
+        <result property="dictionaryClass" column="dictionary_class" jdbcType="VARCHAR"/>
+        <result property="meaning" column="meaning" jdbcType="VARCHAR"/>
+        <result property="numerical" column="numerical" jdbcType="INTEGER"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="updatedUser" column="updated_user" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="INTEGER"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryDictionary" resultMap="DictionaryMap">
+        select
+          id, dictionary_chinese, dictionary_class, meaning, numerical, created_user, created_time, updated_user, updated_time, description, version, deleted
+          from scm_dictionary
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="dictionaryChinese != null and dictionaryChinese != ''">
+                and dictionary_chinese = #{dictionaryChinese}
+            </if>
+            <if test="dictionaryClass != null and dictionaryClass != ''">
+                and dictionary_class = #{dictionaryClass}
+            </if>
+            <if test="meaning != null and meaning != ''">
+                and meaning = #{meaning}
+            </if>
+            <if test="numerical != null">
+                and numerical = #{numerical}
+            </if>
+            <if test="createdUser != null and createdUser != ''">
+                and created_user = #{createdUser}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updatedUser != null and updatedUser != ''">
+                and updated_user = #{updatedUser}
+            </if>
+            <if test="updatedTime != null">
+                and updated_time = #{updatedTime}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="version != null">
+                and version = #{version}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+        </where>
+    </select>
+
+</mapper>
+

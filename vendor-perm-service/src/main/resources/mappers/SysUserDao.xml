@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.vendorperm.dao.SysUserDao">
+
+    <resultMap type="com.xdcplus.vendorperm.common.pojo.entity.SysUser" id="SysUserMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="mail" column="mail" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="loginIp" column="login_ip" jdbcType="VARCHAR"/>
+        <result property="loginDate" column="login_date" jdbcType="INTEGER"/>
+        <result property="lockStatus" column="lock_status" jdbcType="VARCHAR"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="updatedUser" column="updated_user" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="INTEGER"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="employeeId" column="employee_id" jdbcType="INTEGER"/>
+        <result property="sourceType" column="source_type" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        , name, user_name, password, mail, phone, status, login_ip, login_date, lock_status, created_user, created_time, updated_user, updated_time, version, deleted,employee_id,source_type    </sql>
+    <!--通过实体作为筛选条件查询-->
+    <select id="getSysUserByCondition" resultMap="SysUserMap">
+        select
+        <include refid="Base_Column_List"/>
+
+        from sys_user
+        <where>
+            <if test="sysUserFilterQuery.name != null and sysUserFilterQuery.name != ''">
+                and name = #{sysUserFilterQuery.name}
+            </if>
+            <if test="sysUserFilterQuery.userName != null and sysUserFilterQuery.userName != ''">
+                and user_name = #{sysUserFilterQuery.userName}
+            </if>
+            <if test="sysUserFilterQuery.mail != null and sysUserFilterQuery.mail != ''">
+                and sysUserFilterQuery.mail = #{sysUserFilterQuery.mail}
+            </if>
+            <if test="sysUserFilterQuery.phone != null and sysUserFilterQuery.phone != ''">
+                and phone = #{sysUserFilterQuery.phone}
+            </if>
+            <if test="sysUserFilterQuery.status != null and sysUserFilterQuery.status != ''">
+                and status = #{sysUserFilterQuery.status}
+            </if>
+            <if test="sysUserFilterQuery.loginIp != null and sysUserFilterQuery.loginIp != ''">
+                and login_ip = #{sysUserFilterQuery.loginIp}
+            </if>
+            <if test="sysUserFilterQuery.loginDate != null">
+                and login_date = #{sysUserFilterQuery.loginDate}
+            </if>
+            <if test="sysUserFilterQuery.lockStatus != null and sysUserFilterQuery.lockStatus != ''">
+                and lock_status = #{sysUserFilterQuery.lockStatus}
+            </if>
+                and deleted = 0
+        </where>
+    </select>
+    <select id="getSysUserByUserNameAndNoId"
+            resultMap="SysUserMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user where user_name =#{userName}
+        <if test="id != null">
+            and id != #{id}
+        </if>
+        and deleted = 0
+
+    </select>
+    <select id="getSysUserByUserIdOrUserName"
+            resultMap="SysUserMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        <where>
+        <if test="userName != null and userName != ''">
+            and user_name =#{userName}
+        </if>
+        <if test="id != null and id != ''">
+            and id = #{id}
+        </if>
+        </where>
+        and deleted = 0
+
+    </select>
+    <select id="getSysUserByEmployeeAndNoId" resultMap="SysUserMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user <where>
+        employee_id=#{employeeId}
+        <if test="id != null">
+            and id != #{id}
+        </if>
+    </where>
+        and deleted = 0
+
+    </select>
+    <select id="getSysUserByEmployeeId" resultMap="SysUserMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+       where employee_id=#{employeeId} and deleted = 0
+    </select>
+    <select id="getSysUserByUserName" resultMap="SysUserMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        where user_name=#{userName} and deleted = 0
+
+    </select>
+    <select id="getSysUserByEmail" resultMap="SysUserMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        where mail=#{mail} and deleted = 0
+    </select>
+
+
+</mapper>
+

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.permission.dao.SysCompanyDao">
+
+    <resultMap type="com.xdcplus.permission.common.pojo.entity.SysCompany" id="SysCompanyMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="shortName" column="short_name" jdbcType="VARCHAR"/>
+        <result property="fullName" column="full_name" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+        <result property="website" column="website" jdbcType="VARCHAR"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="parentCode" column="parent_code" jdbcType="VARCHAR"/>
+        <result property="principal" column="principal" jdbcType="VARCHAR"/>
+        <result property="principalPhone" column="principal_phone" jdbcType="VARCHAR"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="updatedUser" column="updated_user" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="INTEGER"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="bankAccount" column="bank_account" jdbcType="VARCHAR"/>
+        <result property="bankAccountNumber" column="bank_account_number" jdbcType="VARCHAR"/>
+        <result property="companyType" column="company_type" jdbcType="INTEGER"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        , short_name, full_name, parent_id, website, code, principal, principal_phone, created_user, created_time,
+updated_user, updated_time, version, deleted,parent_code,bank_account,bank_account_number,company_type,address</sql>
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="getSysCompanyByCondition" resultMap="SysCompanyMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_company
+        <where>
+            <if test="sysCompanyFilterQuery.shortName != null and sysCompanyFilterQuery.shortName != ''">
+                and short_name like concat("%",  #{sysCompanyFilterQuery.shortName}, "%")
+            </if>
+            <if test="sysCompanyFilterQuery.fullName != null and sysCompanyFilterQuery.fullName != ''">
+                and full_name like concat("%",  #{sysCompanyFilterQuery.fullName}, "%")
+            </if>
+            <if test="sysCompanyFilterQuery.parentId != null">
+                and parent_id = #{sysCompanyFilterQuery.parentId}
+            </if>
+            <if test="sysCompanyFilterQuery.code != null and sysCompanyFilterQuery.code != ''">
+                and code = #{sysCompanyFilterQuery.code}
+            </if>
+            <if test="sysCompanyFilterQuery.principal != null and sysCompanyFilterQuery.principal != ''">
+                and principal like concat("%",  #{sysCompanyFilterQuery.principal}, "%")
+            </if>
+            and deleted = 0
+        </where>
+    </select>
+    <select id="getTableColumns" resultType="com.xdcplus.permission.common.pojo.vo.ldap.TableColumnVo">
+        SELECT
+            column_name as columnName,
+            column_comment as columnComment
+        FROM
+            information_schema.COLUMNS
+        WHERE
+            table_name =#{tableName}
+    </select>
+    <select id="getSysCompanyByShortNameAndNoId"
+            resultType="com.xdcplus.permission.common.pojo.entity.SysCompany">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_company where short_name =#{shortName}
+        <if test="id != null">
+            and id != #{id}
+        </if>
+        and deleted = 0
+
+    </select>
+
+    <select id="getSysCompanyByCodeAndNoId"
+            resultType="com.xdcplus.permission.common.pojo.entity.SysCompany">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_company where code =#{code}
+        <if test="id != null">
+            and id != #{id}
+        </if>
+        and deleted = 0
+
+    </select>
+    <select id="getSysCompanyDepartmentTree"
+            resultType="com.xdcplus.permission.common.pojo.vo.syscompany.SysCompanyDepartmentVo">
+        select id,short_name as shortName,code,parent_id as parentId,'1' as type from sys_company where deleted=0
+        union
+        SELECT
+            id,
+            short_name AS shortName,
+            CODE,
+            CASE parent_id
+                WHEN 0 THEN
+                    company_id
+                ELSE
+                    parent_id
+                END parentId,
+            '2' AS type
+        FROM
+            sys_department
+                where deleted=0
+    </select>
+
+    <update id="updateParentIdByParentCode">
+        UPDATE sys_company a,sys_company b SET a.parent_id=b.id WHERE a.parent_code=b.`code`
+    </update>
+
+</mapper>
+

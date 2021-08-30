@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.permission.dao.SysJobDao">
+
+    <resultMap type="com.xdcplus.permission.common.pojo.entity.SysJob" id="SysJobMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="shortName" column="short_name" jdbcType="VARCHAR"/>
+        <result property="fullName" column="full_name" jdbcType="VARCHAR"/>
+        <result property="jobTypeId" column="job_type_id" jdbcType="INTEGER"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="updatedUser" column="updated_user" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="INTEGER"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        , short_name, full_name, job_type_id, created_user, created_time, updated_user, updated_time, version, deleted    </sql>
+
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="getSysJobByCondition" resultMap="SysJobMap">
+        select
+        <include refid="Base_Column_List"/>
+
+        from sys_job
+        <where>
+            <if test="sysJobFilterQuery.shortName != null and sysJobFilterQuery.shortName != ''">
+                and short_name like concat("%",  #{sysJobFilterQuery.shortName}, "%")
+            </if>
+            <if test="sysJobFilterQuery.fullName != null and sysJobFilterQuery.fullName != ''">
+                and short_name like concat("%",  #{sysJobFilterQuery.fullName}, "%")
+            </if>
+            <if test="sysJobFilterQuery.jobTypeId != null">
+                and job_type_id = #{sysJobFilterQuery.jobTypeId}
+            </if>
+        </where>
+    </select>
+    <select id="getSysJobByShortNameAndNoId"
+            resultType="com.xdcplus.permission.common.pojo.entity.SysJob">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_job where short_name =#{shortName}
+        <if test="id != null">
+            and id != #{id}
+        </if>
+        and deleted = 0
+    </select>
+    <select id="getByJobTypeId" resultType="com.xdcplus.permission.common.pojo.entity.SysJob">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_job where job_type_id =#{jobTypeId}
+        and deleted = 0
+
+    </select>
+
+</mapper>
+

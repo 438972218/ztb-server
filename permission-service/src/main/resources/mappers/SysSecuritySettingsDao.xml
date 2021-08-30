@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.permission.dao.SysSecuritySettingsDao">
+
+    <resultMap type="com.xdcplus.permission.common.pojo.entity.SysSecuritySettings" id="SysSecuritySettingsMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="passwordMinLength" column="password_min_length" jdbcType="INTEGER"/>
+        <result property="passwordFailNumberLimit" column="password_fail_number_limit" jdbcType="INTEGER"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="updatedUser" column="updated_user" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="INTEGER"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        , password_min_length, password_fail_number_limit, created_user, created_time, updated_user, updated_time, version, deleted    </sql>
+
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SysSecuritySettingsMap">
+        select
+        <include refid="Base_Column_List"/>
+
+        from sys_security_settings
+        <where>
+
+            <if test="sysSecuritySettings.passwordMinLength != null">
+                and password_min_length = #{sysSecuritySettings.passwordMinLength}
+            </if>
+            <if test="sysSecuritySettings.passwordFailNumberLimit != null">
+                and password_fail_number_limit = #{sysSecuritySettings.passwordFailNumberLimit}
+            </if>
+            <if test="sysSecuritySettings.createdUser != null and sysSecuritySettings.createdUser != ''">
+                and created_user = #{sysSecuritySettings.createdUser}
+            </if>
+            <if test="sysSecuritySettings.deleted != null">
+                and deleted = #{sysSecuritySettings.deleted}
+            </if>
+        </where>
+    </select>
+
+</mapper>
+

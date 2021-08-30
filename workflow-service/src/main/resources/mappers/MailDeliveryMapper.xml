@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.workflow.mapper.MailDeliveryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xdcplus.workflow.common.pojo.entity.MailDelivery">
+        <id column="id" property="id" />
+        <result column="sending_point" property="sendingPoint" />
+        <result column="mail_subject" property="mailSubject" />
+        <result column="mail_from" property="mailFrom" />
+        <result column="mail_to" property="mailTo" />
+        <result column="mail_cc" property="mailCc" />
+        <result column="mail_bcc" property="mailBcc" />
+        <result column="mail_reply" property="mailReply" />
+        <result column="created_time" property="createdTime" />
+        <result column="updated_time" property="updatedTime" />
+        <result column="created_user" property="createdUser" />
+        <result column="updated_user" property="updatedUser" />
+        <result column="description" property="description" />
+    </resultMap>
+
+    <resultMap id="MailResultMap" type="com.xdcplus.workflow.common.pojo.bo.MailDeliveryBO">
+        <id column="id" property="id" />
+        <result column="sending_point" property="sendingPoint" />
+        <result column="mail_subject" property="mailSubject" />
+        <result column="mail_from" property="mailFrom" />
+        <result column="mail_to" property="mailTo" />
+        <result column="mail_cc" property="mailCc" />
+        <result column="mail_bcc" property="mailBcc" />
+        <result column="mail_reply" property="mailReply" />
+        <result column="created_time" property="createdTime" />
+        <result column="updated_time" property="updatedTime" />
+        <result column="created_user" property="createdUser" />
+        <result column="updated_user" property="updatedUser" />
+        <result column="description" property="description" />
+        <association property="template" javaType="com.xdcplus.workflow.common.pojo.entity.MailTemplate" columnPrefix="template_">
+            <id column="id" property="id" />
+            <result column="name" property="name" />
+            <result column="type" property="type" />
+            <result column="template" property="template" />
+            <result column="created_time" property="createdTime" />
+            <result column="updated_time" property="updatedTime" />
+            <result column="created_user" property="createdUser" />
+            <result column="updated_user" property="updatedUser" />
+            <result column="description" property="description" />
+        </association>
+
+
+
+
+
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, sending_point, mail_subject, mail_from, mail_to, mail_cc, mail_bcc, mail_reply, created_time, updated_time, created_user, updated_user, description
+    </sql>
+
+    <sql id="Mail_Delivery_Column_List">
+        ${alias}.id as id, ${alias}.sending_point as sending_point,
+        ${alias}.mail_subject as mail_subject,${alias}.mail_from as mail_from,
+        ${alias}.mail_to as mail_to, ${alias}.mail_cc as mail_cc,
+        ${alias}.mail_bcc as mail_bcc, ${alias}.mail_reply as mail_reply,
+        ${alias}.created_time as created_time, ${alias}.updated_time as updated_time,
+        ${alias}.created_user as created_user, ${alias}.updated_user as updated_user,
+        ${alias}.description as description
+    </sql>
+
+    <sql id="Mail_Template_Column_List">
+        ${alias}.id as ${alias}_id,${alias}.name as ${alias}_name,
+        ${alias}.type as ${alias}_type,${alias}.template as ${alias}_template,
+        ${alias}.default_value as ${alias}_default_value,
+        ${alias}.created_time as ${alias}_created_time,
+        ${alias}.updated_time as ${alias}_updated_time,
+        ${alias}.created_user as ${alias}_created_user,
+        ${alias}.updated_user as ${alias}_updated_user,
+        ${alias}.description as ${alias}_description
+    </sql>
+
+    <select id="findMailDeliveryBySendPoint" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from xdc_t_mail_delivery
+        where sending_point = #{sendPoint,jdbcType=VARCHAR}
+    </select>
+    <select id="findMailDelivery" resultMap="MailResultMap">
+        SELECT
+           <include refid="Mail_Delivery_Column_List"><property name="alias" value="delivery"/></include>,
+           <include refid="Mail_Template_Column_List"><property name="alias" value="template"/></include>
+        FROM
+            xdc_t_mail_delivery as delivery
+        	LEFT JOIN xdc_t_mail_relation AS relation ON delivery.id = relation.delivery_id
+	        LEFT JOIN xdc_t_mail_template AS template ON template.id = relation.template_id
+        <where>
+            <if test="templateId != null">
+                template.id = #{templateId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+    <select id="findOne" resultMap="MailResultMap">
+        SELECT
+           <include refid="Mail_Delivery_Column_List"><property name="alias" value="delivery"/></include>,
+           <include refid="Mail_Template_Column_List"><property name="alias" value="template"/></include>
+        FROM
+            xdc_t_mail_delivery as delivery
+        	LEFT JOIN xdc_t_mail_relation AS relation ON delivery.id = relation.delivery_id
+	        LEFT JOIN xdc_t_mail_template AS template ON template.id = relation.template_id
+        where delivery.id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="findMailDeliveryByPoint" resultMap="MailResultMap">
+        SELECT
+           <include refid="Mail_Delivery_Column_List"><property name="alias" value="delivery"/></include>,
+           <include refid="Mail_Template_Column_List"><property name="alias" value="template"/></include>
+        FROM
+            xdc_t_mail_delivery as delivery
+        	LEFT JOIN xdc_t_mail_relation AS relation ON delivery.id = relation.delivery_id
+	        LEFT JOIN xdc_t_mail_template AS template ON template.id = relation.template_id
+        where delivery.sending_point = #{sendPoint,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.biz.mapper.VendorMapper">
+
+    <resultMap type="com.xdcplus.biz.common.pojo.entity.Vendor" id="VendorMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="requestId" column="request_id" jdbcType="INTEGER"/>
+        <result property="requestName" column="request_name" jdbcType="VARCHAR"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="legalRepresentative" column="legal_representative" jdbcType="VARCHAR"/>
+        <result property="registeredCapital" column="registered_capital" jdbcType="VARCHAR"/>
+        <result property="icrn" column="icrn" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="uscc" column="uscc" jdbcType="VARCHAR"/>
+        <result property="registrationStatus" column="registration_status" jdbcType="VARCHAR"/>
+        <result property="orzCode" column="orz_code" jdbcType="VARCHAR"/>
+        <result property="taxpayNum" column="taxpay_num" jdbcType="VARCHAR"/>
+        <result property="area" column="area" jdbcType="VARCHAR"/>
+        <result property="industry" column="industry" jdbcType="VARCHAR"/>
+        <result property="registeredAddress" column="registered_address" jdbcType="VARCHAR"/>
+        <result property="businessScope" column="business_scope" jdbcType="VARCHAR"/>
+        <result property="contactName" column="contact_name" jdbcType="VARCHAR"/>
+        <result property="contactTitle" column="contact_title" jdbcType="VARCHAR"/>
+        <result property="contactMobile" column="contact_mobile" jdbcType="VARCHAR"/>
+        <result property="contactEmail" column="contact_email" jdbcType="VARCHAR"/>
+        <result property="contactIdentityType" column="contact_identity_type" jdbcType="VARCHAR"/>
+        <result property="contactIdentityNum" column="contact_identity_num" jdbcType="VARCHAR"/>
+        <result property="identityFront" column="identity_front" jdbcType="VARCHAR"/>
+        <result property="identityReverse" column="identity_reverse" jdbcType="VARCHAR"/>
+        <result property="businessModel" column="business_model" jdbcType="VARCHAR"/>
+        <result property="agentBrand" column="agent_brand" jdbcType="VARCHAR"/>
+        <result property="suplyCategoryRemark" column="suply_category_remark" jdbcType="VARCHAR"/>
+        <result property="mainCategory" column="main_category" jdbcType="VARCHAR"/>
+        <result property="mainCustomer" column="main_customer" jdbcType="VARCHAR"/>
+        <result property="factoryArea" column="factory_area" jdbcType="VARCHAR"/>
+        <result property="factoryNature" column="factory_nature" jdbcType="VARCHAR"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="updatedUser" column="updated_user" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="INTEGER"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryVendor" resultMap="VendorMap">
+        select
+          id, request_id, request_name, code, status, name, legal_representative, registered_capital, icrn, type, uscc, registration_status, orz_code, taxpay_num, area, industry, registered_address, business_scope, contact_name, contact_title, contact_mobile, contact_email, contact_identity_type, contact_identity_num, identity_front, identity_reverse, business_model, agent_brand, suply_category_remark, main_category, main_customer, factory_area, factory_nature, created_user, created_time, updated_user, updated_time, description, version, deleted
+          from scm_vendor
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="requestId != null">
+                and request_id = #{requestId}
+            </if>
+            <if test="requestName != null and requestName != ''">
+                and request_name = #{requestName}
+            </if>
+            <if test="code != null and code != ''">
+                and code = #{code}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="legalRepresentative != null and legalRepresentative != ''">
+                and legal_representative = #{legalRepresentative}
+            </if>
+            <if test="registeredCapital != null and registeredCapital != ''">
+                and registered_capital = #{registeredCapital}
+            </if>
+            <if test="icrn != null and icrn != ''">
+                and icrn = #{icrn}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="uscc != null and uscc != ''">
+                and uscc = #{uscc}
+            </if>
+            <if test="registrationStatus != null and registrationStatus != ''">
+                and registration_status = #{registrationStatus}
+            </if>
+            <if test="orzCode != null and orzCode != ''">
+                and orz_code = #{orzCode}
+            </if>
+            <if test="taxpayNum != null and taxpayNum != ''">
+                and taxpay_num = #{taxpayNum}
+            </if>
+            <if test="area != null and area != ''">
+                and area = #{area}
+            </if>
+            <if test="industry != null and industry != ''">
+                and industry = #{industry}
+            </if>
+            <if test="registeredAddress != null and registeredAddress != ''">
+                and registered_address = #{registeredAddress}
+            </if>
+            <if test="businessScope != null and businessScope != ''">
+                and business_scope = #{businessScope}
+            </if>
+            <if test="contactName != null and contactName != ''">
+                and contact_name = #{contactName}
+            </if>
+            <if test="contactTitle != null and contactTitle != ''">
+                and contact_title = #{contactTitle}
+            </if>
+            <if test="contactMobile != null and contactMobile != ''">
+                and contact_mobile = #{contactMobile}
+            </if>
+            <if test="contactEmail != null and contactEmail != ''">
+                and contact_email = #{contactEmail}
+            </if>
+            <if test="contactIdentityType != null and contactIdentityType != ''">
+                and contact_identity_type = #{contactIdentityType}
+            </if>
+            <if test="contactIdentityNum != null and contactIdentityNum != ''">
+                and contact_identity_num = #{contactIdentityNum}
+            </if>
+            <if test="identityFront != null and identityFront != ''">
+                and identity_front = #{identityFront}
+            </if>
+            <if test="identityReverse != null and identityReverse != ''">
+                and identity_reverse = #{identityReverse}
+            </if>
+            <if test="businessModel != null and businessModel != ''">
+                and business_model = #{businessModel}
+            </if>
+            <if test="agentBrand != null and agentBrand != ''">
+                and agent_brand = #{agentBrand}
+            </if>
+            <if test="suplyCategoryRemark != null and suplyCategoryRemark != ''">
+                and suply_category_remark = #{suplyCategoryRemark}
+            </if>
+            <if test="mainCategory != null and mainCategory != ''">
+                and main_category = #{mainCategory}
+            </if>
+            <if test="mainCustomer != null and mainCustomer != ''">
+                and main_customer = #{mainCustomer}
+            </if>
+            <if test="factoryArea != null and factoryArea != ''">
+                and factory_area = #{factoryArea}
+            </if>
+            <if test="factoryNature != null and factoryNature != ''">
+                and factory_nature = #{factoryNature}
+            </if>
+            <if test="createdUser != null and createdUser != ''">
+                and created_user = #{createdUser}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updatedUser != null and updatedUser != ''">
+                and updated_user = #{updatedUser}
+            </if>
+            <if test="updatedTime != null">
+                and updated_time = #{updatedTime}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="version != null">
+                and version = #{version}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+        </where>
+    </select>
+
+    <select id="showVendorByUserId" resultType="com.xdcplus.biz.common.pojo.vo.VendorVO">
+        select sv.id ,sv.code
+        from scm_vendor sv left join scm_user_vendor suv on suv.vendor_id=sv.id
+        where suv.user_id=#{id}
+    </select>
+
+</mapper>
+

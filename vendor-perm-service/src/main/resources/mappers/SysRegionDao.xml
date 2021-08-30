@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.vendorperm.dao.SysRegionDao">
+
+    <resultMap type="com.xdcplus.vendorperm.common.pojo.entity.SysRegion" id="SysRegionMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+        <result property="ancestors" column="ancestors" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="updatedUser" column="updated_user" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="INTEGER"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        , name, parent_id, ancestors, type, created_user, created_time, updated_user, updated_time, version, deleted    </sql>
+    <update id="updateSysRegionChildren">
+        update sys_region set ancestors =
+        <foreach collection="sysRegionList" item="item" index="index"
+                 separator=" " open="case id" close="end">
+            when #{item.id} then #{item.ancestors}
+        </foreach>
+        where id in
+        <foreach collection="sysRegionList" item="item" index="index"
+                 separator="," open="(" close=")">
+            #{item.id}
+        </foreach>
+    </update>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="getSysRegionByCondition" resultMap="SysRegionMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_region
+        <where>
+            <if test="sysRegionFilterQuery.name != null and sysRegionFilterQuery.name != ''">
+                and name like concat("%",  #{sysRegionFilterQuery.name}, "%")
+            </if>
+            <if test="sysRegionFilterQuery.parentId != null and sysRegionFilterQuery.parentId != ''">
+                parent_id= #{sysRegionFilterQuery.parentId}
+            </if>
+            <if test="sysRegionFilterQuery.type != null and sysRegionFilterQuery.type != ''">
+                type= #{sysRegionFilterQuery.type}
+            </if>
+    and deleted=0
+        </where>
+    </select>
+    <select id="getSysRegionByNameAndNoId"
+            resultType="com.xdcplus.vendorperm.common.pojo.entity.SysRegion">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_region where name =#{name}
+        <if test="id != null">
+            and id != #{id}
+        </if>
+        and parent_id=#{parentId}
+        and deleted = 0
+
+    </select>
+    <select id="getChildrenRegionById" resultType="com.xdcplus.vendorperm.common.pojo.entity.SysRegion">
+        select * from sys_region where find_in_set(#{id}, ancestors)
+    </select>
+
+
+</mapper>
+

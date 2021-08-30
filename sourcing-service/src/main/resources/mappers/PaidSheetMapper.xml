@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.biz.mapper.PaidSheetMapper">
+
+    <resultMap type="com.xdcplus.biz.common.pojo.entity.PaidSheet" id="PaidSheetMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="requestId" column="request_id" jdbcType="INTEGER"/>
+        <result property="projectSheetId" column="project_sheet_id" jdbcType="INTEGER"/>
+        <result property="paidStatusMark" column="paid_status_mark" jdbcType="INTEGER"/>
+        <result property="paidStatus" column="paid_status" jdbcType="VARCHAR"/>
+        <result property="paidNum" column="paid_num" jdbcType="VARCHAR"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="offerStartTime" column="offer_start_time" jdbcType="INTEGER"/>
+        <result property="offerEndTime" column="offer_end_time" jdbcType="INTEGER"/>
+        <result property="firstEndTime" column="first_end_time" jdbcType="INTEGER"/>
+        <result property="displacementTime" column="displacement_time" jdbcType="INTEGER"/>
+        <result property="pauseTime" column="pause_time" jdbcType="INTEGER"/>
+        <result property="budget" column="budget" jdbcType="NUMERIC"/>
+        <result property="currency" column="currency" jdbcType="VARCHAR"/>
+        <result property="whetherTest" column="whether_test" jdbcType="INTEGER"/>
+        <result property="items" column="items" jdbcType="VARCHAR"/>
+        <result property="paidDirection" column="paid_direction" jdbcType="VARCHAR"/>
+        <result property="bidStructure" column="bid_structure" jdbcType="VARCHAR"/>
+        <result property="manyBatchesType" column="many_batches_type" jdbcType="VARCHAR"/>
+        <result property="startPrice" column="start_price" jdbcType="NUMERIC"/>
+        <result property="minimumBidRule" column="minimum_bid_rule" jdbcType="VARCHAR"/>
+        <result property="minimumBidRange" column="minimum_bid_range" jdbcType="VARCHAR"/>
+        <result property="triggerPrice" column="trigger_price" jdbcType="NUMERIC"/>
+        <result property="delayInterval" column="delay_interval" jdbcType="INTEGER"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="updatedUser" column="updated_user" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="INTEGER"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryPaidSheet" resultMap="PaidSheetMap">
+        select
+          id, request_id, project_sheet_id, paid_status_mark, paid_status, paid_num, title, offer_start_time, offer_end_time, first_end_time, displacement_time, pause_time, budget, currency, whether_test, items, paid_direction, bid_structure, many_batches_type, start_price, minimum_bid_rule, minimum_bid_range, trigger_price, delay_interval, created_user, created_time, updated_user, updated_time, description, version, deleted
+          from scm_paid_sheet
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="requestId != null">
+                and request_id = #{requestId}
+            </if>
+            <if test="projectSheetId != null">
+                and project_sheet_id = #{projectSheetId}
+            </if>
+            <if test="paidStatusMark != null">
+                and paid_status_mark = #{paidStatusMark}
+            </if>
+            <if test="paidStatus != null and paidStatus != ''">
+                and paid_status = #{paidStatus}
+            </if>
+            <if test="paidNum != null and paidNum != ''">
+                and paid_num = #{paidNum}
+            </if>
+            <if test="title != null and title != ''">
+                and title = #{title}
+            </if>
+            <if test="offerStartTime != null">
+                and offer_start_time = #{offerStartTime}
+            </if>
+            <if test="offerEndTime != null">
+                and offer_end_time = #{offerEndTime}
+            </if>
+            <if test="firstEndTime != null">
+                and first_end_time = #{firstEndTime}
+            </if>
+            <if test="displacementTime != null">
+                and displacement_time = #{displacementTime}
+            </if>
+            <if test="pauseTime != null">
+                and pause_time = #{pauseTime}
+            </if>
+            <if test="budget != null">
+                and budget = #{budget}
+            </if>
+            <if test="currency != null and currency != ''">
+                and currency = #{currency}
+            </if>
+            <if test="whetherTest != null">
+                and whether_test = #{whetherTest}
+            </if>
+            <if test="items != null and items != ''">
+                and items = #{items}
+            </if>
+            <if test="paidDirection != null and paidDirection != ''">
+                and paid_direction = #{paidDirection}
+            </if>
+            <if test="bidStructure != null and bidStructure != ''">
+                and bid_structure = #{bidStructure}
+            </if>
+            <if test="manyBatchesType != null and manyBatchesType != ''">
+                and many_batches_type = #{manyBatchesType}
+            </if>
+            <if test="startPrice != null">
+                and start_price = #{startPrice}
+            </if>
+            <if test="minimumBidRule != null and minimumBidRule != ''">
+                and minimum_bid_rule = #{minimumBidRule}
+            </if>
+            <if test="minimumBidRange != null and minimumBidRange != ''">
+                and minimum_bid_range = #{minimumBidRange}
+            </if>
+            <if test="triggerPrice != null">
+                and trigger_price = #{triggerPrice}
+            </if>
+            <if test="delayInterval != null">
+                and delay_interval = #{delayInterval}
+            </if>
+            <if test="createdUser != null and createdUser != ''">
+                and created_user = #{createdUser}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updatedUser != null and updatedUser != ''">
+                and updated_user = #{updatedUser}
+            </if>
+            <if test="updatedTime != null">
+                and updated_time = #{updatedTime}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="version != null">
+                and version = #{version}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+            <if test="paidStatusMarks !=null">
+                AND (paid_status_mark in
+                        <foreach collection="paidStatusMarks" index="index" item="item" open="(" separator="," close=")">
+                            #{item}
+                        </foreach>
+                    )
+            </if>
+        </where>
+    </select>
+    <select id="queryPaidSheetCache" resultMap="PaidSheetMap">
+        select
+          id, request_id, project_sheet_id, paid_status_mark, paid_status, paid_num, title, offer_start_time, offer_end_time, budget, currency, whether_test, items, paid_direction, bid_structure, start_price, minimum_bid_rule, minimum_bid_range, trigger_price, delay_interval, created_user, created_time, updated_user, updated_time, description, version, deleted
+          from scm_paid_sheet
+        where paid_status_mark in (1,2)
+    </select>
+
+</mapper>
+

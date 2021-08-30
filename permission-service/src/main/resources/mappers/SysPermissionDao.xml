@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.permission.dao.SysPermissionDao">
+
+    <resultMap type="com.xdcplus.permission.common.pojo.entity.SysPermission" id="SysPermissionMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+        <result property="level" column="level" jdbcType="VARCHAR"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="routeUrl" column="route_url" jdbcType="VARCHAR"/>
+        <result property="isHide" column="is_hide" jdbcType="INTEGER"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="icon" column="icon" jdbcType="VARCHAR"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="updatedUser" column="updated_user" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="INTEGER"/>
+
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="permission" column="permission" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        , name, parent_id, level, sort, route_url, is_hide, description, icon, created_user, created_time, updated_user, updated_time, version, deleted,permission    </sql>
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="getSysPermissionByCondition" resultMap="SysPermissionMap">
+        select
+        <include refid="Base_Column_List"/>
+
+        from sys_permission
+        <where>
+            <if test="sysPermissionFilterQuery.name != null and sysPermissionFilterQuery.name != ''">
+                and name like concat("%",  #{sysPermissionFilterQuery.name}, "%")
+            </if>
+                and deleted = 0
+        </where>
+    </select>
+    <select id="getSysPermissionByNameAndNoId"
+            resultMap="SysPermissionMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_permission where name =#{name}
+        <if test="id != null">
+            and id != #{id}
+        </if>
+        and deleted = 0
+
+    </select>
+    <select id="getPermissionByPermissionGroupId"
+            resultMap="SysPermissionMap">
+
+        select sys_permission.* from sys_permission
+                                         join sys_permission_group_permission on sys_permission.id=sys_permission_group_permission.permission_id
+        where sys_permission_group_permission.permission_group_id =#{permissionGroupId}
+          and sys_permission.deleted = 0
+    </select>
+    <select id="getPermissionByRoleId"
+            resultMap="SysPermissionMap">
+        select sys_permission.* from sys_permission
+            join sys_permission_group_permission on sys_permission.id=sys_permission_group_permission.permission_id
+            join sys_role_permission_group on sys_permission_group_permission.permission_group_id=sys_role_permission_group.permission_group_id
+        WHERE
+            sys_role_permission_group.role_id = #{roleId}
+          and sys_permission.deleted = 0
+    </select>
+
+
+</mapper>
+

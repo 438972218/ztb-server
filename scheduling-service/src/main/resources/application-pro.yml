@@ -1,0 +1,13 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # JWT URI，认证服务器IP，端口
+          jwk-set-uri: http://${AUTH_HOST}:${AUTH_PORT}/${AUTH_URL:perm/anon/getPublicKey}
+
+  # redis 缓存配置
+  redis:
+    host: ${REDIS_HOST}
+    port: 6379
+    database: 1

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdcplus.vendor.mapper.BidVendorMapper">
+
+    <resultMap type="com.xdcplus.vendor.common.pojo.entity.BidVendor" id="BidVendorMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="bidSheetId" column="bid_sheet_id" jdbcType="INTEGER"/>
+        <result property="vendorId" column="vendor_id" jdbcType="INTEGER"/>
+        <result property="vendorUserId" column="vendor_user_id" jdbcType="INTEGER"/>
+        <result property="vendorCode" column="vendor_code" jdbcType="VARCHAR"/>
+        <result property="vendorName" column="vendor_name" jdbcType="VARCHAR"/>
+        <result property="vendorStatus" column="vendor_status" jdbcType="VARCHAR"/>
+        <result property="againStatus" column="again_status" jdbcType="VARCHAR"/>
+        <result property="replyTime" column="reply_time" jdbcType="INTEGER"/>
+        <result property="checkTime" column="check_time" jdbcType="INTEGER"/>
+        <result property="round" column="round" jdbcType="INTEGER"/>
+        <result property="qualificationAttQuantity" column="qualification_att_quantity" jdbcType="INTEGER"/>
+        <result property="technologyAttQuantity" column="technology_att_quantity" jdbcType="INTEGER"/>
+        <result property="qualificationView" column="qualification_view" jdbcType="INTEGER"/>
+        <result property="technologyView" column="technology_view" jdbcType="INTEGER"/>
+        <result property="commerceView" column="commerce_view" jdbcType="INTEGER"/>
+        <result property="totalPrice" column="total_price" jdbcType="NUMERIC"/>
+        <result property="qualificationScore" column="qualification_score" jdbcType="NUMERIC"/>
+        <result property="technologyScore" column="technology_score" jdbcType="NUMERIC"/>
+        <result property="commerceScore" column="commerce_score" jdbcType="NUMERIC"/>
+        <result property="totalScore" column="total_score" jdbcType="NUMERIC"/>
+        <result property="confirmedPrice" column="confirmed_price" jdbcType="NUMERIC"/>
+        <result property="createdUser" column="created_user" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="INTEGER"/>
+        <result property="updatedUser" column="updated_user" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="INTEGER"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryBidVendor" resultMap="BidVendorMap">
+        select
+          id, bid_sheet_id, vendor_id, vendor_user_id, vendor_code, vendor_name, vendor_status, again_status, reply_time, check_time, round, qualification_att_quantity, technology_att_quantity, qualification_view, technology_view, commerce_view, total_price, qualification_score, technology_score, commerce_score, total_score, confirmed_price, created_user, created_time, updated_user, updated_time, description, version, deleted
+          from scm_bid_vendor
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="bidSheetId != null">
+                and bid_sheet_id = #{bidSheetId}
+            </if>
+            <if test="vendorId != null">
+                and vendor_id = #{vendorId}
+            </if>
+            <if test="vendorUserId != null">
+                and vendor_user_id = #{vendorUserId}
+            </if>
+            <if test="vendorCode != null and vendorCode != ''">
+                and vendor_code = #{vendorCode}
+            </if>
+            <if test="vendorName != null and vendorName != ''">
+                and vendor_name = #{vendorName}
+            </if>
+            <if test="vendorStatus != null and vendorStatus != ''">
+                and vendor_status = #{vendorStatus}
+            </if>
+            <if test="againStatus != null and againStatus != ''">
+                and again_status = #{againStatus}
+            </if>
+            <if test="replyTime != null">
+                and reply_time = #{replyTime}
+            </if>
+            <if test="checkTime != null">
+                and check_time = #{checkTime}
+            </if>
+            <if test="round != null">
+                and round = #{round}
+            </if>
+            <if test="qualificationAttQuantity != null">
+                and qualification_att_quantity = #{qualificationAttQuantity}
+            </if>
+            <if test="technologyAttQuantity != null">
+                and technology_att_quantity = #{technologyAttQuantity}
+            </if>
+            <if test="qualificationView != null">
+                and qualification_view = #{qualificationView}
+            </if>
+            <if test="technologyView != null">
+                and technology_view = #{technologyView}
+            </if>
+            <if test="commerceView != null">
+                and commerce_view = #{commerceView}
+            </if>
+            <if test="totalPrice != null">
+                and total_price = #{totalPrice}
+            </if>
+            <if test="qualificationScore != null">
+                and qualification_score = #{qualificationScore}
+            </if>
+            <if test="technologyScore != null">
+                and technology_score = #{technologyScore}
+            </if>
+            <if test="commerceScore != null">
+                and commerce_score = #{commerceScore}
+            </if>
+            <if test="totalScore != null">
+                and total_score = #{totalScore}
+            </if>
+            <if test="confirmedPrice != null">
+                and confirmed_price = #{confirmedPrice}
+            </if>
+            <if test="createdUser != null and createdUser != ''">
+                and created_user = #{createdUser}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updatedUser != null and updatedUser != ''">
+                and updated_user = #{updatedUser}
+            </if>
+            <if test="updatedTime != null">
+                and updated_time = #{updatedTime}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="version != null">
+                and version = #{version}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+        </where>
+    </select>
+
+</mapper>
+
